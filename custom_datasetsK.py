@@ -25,24 +25,28 @@ CUSTOM_DATASETS_CONFIG = {
 
 def dtst(folder):
     '''
-    img = open_file('/home/abhi/Desktop/Hyperspectral Datasets/mat_files/Indian_pines_corrected.mat)[:,:,:-2]
-    gt = open_file('/home/abhi_daiict/Desktop/Hyperspectral_dataset/Aviris_Anand_gt.tif')
-     
     img=loadmat('/home/abhi/Desktop/Hyperspectral Datasets/mat_files/Indian_pines_corrected.mat')
     img=img['indian_pines_corrected']
     imgt=loadmat('/home/abhi/Desktop/Hyperspectral Datasets/mat_files/Indian_pines_gt.mat')
     gt=imgt['indian_pines_gt']
-        
+    
     img=loadmat('/home/abhi/Desktop/Hyperspectral Datasets/mat_files/Salinas.mat')
     img=img['salinas']
     imgt=loadmat('/home/abhi/Desktop/Hyperspectral Datasets/mat_files/Salinas_gt.mat')
     gt=imgt['salinas_gt']
+    '''   
+    img=loadmat('/home/abhi/Desktop/Hyperspectral Datasets/GaborCNN/img.mat')
+    img=img['Clip_Feature_class'] 
+    gt=img[:,:,12]
+    img=img[:,:,0:12]
     '''
-    img=loadmat('/home/abhi/Desktop/Hyperspectral Datasets/mat_files/Pavia.mat')
-    img=img['pavia']
-    imgt=loadmat('/home/abhi/Desktop/Hyperspectral Datasets/mat_files/Pavia_gt.mat')
-    gt=imgt['pavia_gt']
-        
+    img=loadmat('/home/abhi/Desktop/Hyperspectral Datasets/mat_files/PaviaU.mat')
+    img=img['paviaU']
+    imgt=loadmat('/home/abhi/Desktop/Hyperspectral Datasets/mat_files/PaviaU_gt.mat')
+    gt=imgt['paviaU_gt']
+    '''
+    '''
+    #for anand dataset
     label_values = ["Unclassified",
                         "Grass",
                         "Baresoil",
@@ -64,29 +68,31 @@ def dtst(folder):
                         "Amla",
                         "Caster",
                         ]
-    ignored_labels = [0]
     
-    '''
-        label_values = ["Undefined", "Alfalfa", "Corn-notill", "Corn-mintill",
+    
+    
+    #for Indian Pines dataset
+    label_values = ["Undefined", "Alfalfa", "Corn-notill", "Corn-mintill",
                         "Corn", "Grass-pasture", "Grass-trees",
                         "Grass-pasture-mowed", "Hay-windrowed", "Oats",
                         "Soybean-notill", "Soybean-mintill", "Soybean-clean",
                         "Wheat", "Woods", "Buildings-Grass-Trees-Drives",
                         "Stone-Steel-Towers"]
-    '''
+    
     # For Pavia dataset
-    label_values = ['Undefined','Water',	
-                       'Trees',
-	                    'Asphalt',	
-	                    'Self-Blocking Bricks',	
+    label_values = ['Undefined','Asphalt',	
+                       'Meadows',
+	                    'Gravel',	
+	                    'Trees',	
+	                    'Painted Metal Sheets',	
+	                    'Bare Soil',	
 	                    'Bitumen',	
-	                    'Tiles',	
-	                    'Shadows',	
-	                    'Meadows',	
-	                    'Bare Soil']
-    '''
-        #for salinas dataset
-        label_values = ["Undefined",'Brocoli_green_weeds_1',	
+	                    'Self-Blocking Bricks',	
+	                    'Shadows']
+    
+    
+    #for salinas dataset
+    label_values = ["Undefined",'Brocoli_green_weeds_1',	
 	                      'Brocoli_green_weeds_2'	,
 	                       'Fallow',
 	                       'Fallow_rough_plow',
@@ -104,18 +110,41 @@ def dtst(folder):
 	                     'Vinyard_vertical_trellis']        
     '''
     
+    palette = dict((
+    (0, (0, 0, 0)),  # Unclassified
+    (1, (67, 0, 30)),  # Alfalfa
+    (2, (25, 23, 38)),  # Corn-notill
+    (3, (15, 11, 96)),  # Corn-mintill
+    (4, (17, 12, 10)),  # Corn
+    (5, (42,250,20)),  # Grass-pasture
+    (6, (78, 239, 8)),  # Grass-trees
+    (7, (176, 48, 38)),  #  Grass-pasture-mowed
+    (8, (70, 20, 0)),  # Hay-windrowed
+    (9, (80, 20, 0)),  # Oats
+    (10, (20, 23, 38)),  # Soybean-notill
+    (11, (14, 110, 96)),  # Soybean-mintill
+    (12, (17, 128, 0)),  # Soybean-clean
+    (13, (42,3,25)),  # Wheat
+    (14, (10, 239, 47)),  # Woods
+    (15, (76, 48, 0)), # Buildings-Grass-Trees-Drives
+    (16, (16, 239, 100))))  # Stone-Steel-Towers
     '''
     palette = dict((
-    (0, (0,   0,   0)),  # Unclassified
-    (1, (107,   0,   0)),  # Grass
-    (2, (255, 23,   38)),  # Bare Soil
-    (3, (154,   119, 96)),  # plough Field
-    (4, (17, 128, 0)),  # rail
-    (5, (42,35,255)),  # Maize
-    (6, (146,   239, 48)),  # Building
-    (7, (176, 48, 38))))
+    (0, (0, 0, 0)),  # Unclassified
+    (1, (67, 0, 30)),  # Alfalfa
+    (2, (25, 23, 38)),  # Corn-notill
+    (3, (15, 11, 96)),  # Corn-mintill
+    (4, (17, 12, 10)),  # Corn
+    (5, (42,250,20)),  # Grass-pasture
+    (6, (78, 239, 8)),  # Grass-trees
+    (7, (176, 48, 38)),  #  Grass-pasture-mowed
+    (8, (70, 20, 0)),  # Hay-windrowed
+    (9, (80, 20, 0))))  # Oats
     '''
-    return img,gt,label_values,ignored_labels
+ 
+    ignored_labels = [0] 
+    
+    return img,gt,label_values,ignored_labels,palette
 
 def load_data(data, gt,**hyperparams):
     patch=[]
@@ -330,7 +359,7 @@ class HyperX(keras.utils.Sequence):
         self.label = gt
         self.n_classes=hyperparams['n_classes']
         self.batch_size=hyperparams['batch_size']
-        self.name = hyperparams['dataset']
+        #self.name = hyperparams['dataset']
         self.patch_size = hyperparams['patch_size']
         self.ignored_labels = set(hyperparams['ignored_labels'])
         self.flip_augmentation = hyperparams['flip_augmentation']
